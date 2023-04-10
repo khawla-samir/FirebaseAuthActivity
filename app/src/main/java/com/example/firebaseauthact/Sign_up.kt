@@ -22,6 +22,8 @@ class Sign_up : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        onStart()
         email = findViewById(R.id.email1)
         password = findViewById(R.id.password1)
         signup = findViewById(R.id.signUp1)
@@ -41,11 +43,18 @@ class Sign_up : AppCompatActivity() {
         }
     }
 
+
     fun updateUI() {
         var i = Intent(this, Log_In::class.java)
         startActivity(i)
     }
-
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            updateUI()
+        }
+    }
     private fun createNewAccount(email: String, password: String) {
 
         auth.createUserWithEmailAndPassword(email, password)
